@@ -10,7 +10,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
 
 .promo__title {
@@ -21,3 +20,17 @@
   font-weight: 400;
   letter-spacing: -0.04em;
 }
+
+@media (min-width: 768px) {
+  .promo {
+    background-size: 320px 320px;
+  }
+  .promo__title {
+    font-size: 50px;
+    line-height: 58px;
+  }
+}
+
+/* @media (min-width: 1280px) {
+
+} */

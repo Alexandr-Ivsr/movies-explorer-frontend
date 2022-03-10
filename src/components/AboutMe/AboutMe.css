@@ -31,6 +31,8 @@
 	width: 292px;
 	height: 352px;
 	object-fit: cover;
+	box-sizing: border-box;
+	max-width: 100%;
 }
 
 .about-me__info {
@@ -68,6 +70,11 @@
 	font-weight: 500;
 	font-size: 14px;
 	line-height: 17px;
+	transition: .2s opacity ease-in-out;
+}
+
+.about-me__link:hover {
+	opacity: .5;
 }
 
 .about-me__link:nth-child(2n) {

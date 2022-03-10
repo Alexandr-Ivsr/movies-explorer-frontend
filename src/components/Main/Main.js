@@ -7,6 +7,7 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
+import Footer from '../Footer/Footer';
 
 export default function Main(props) {
   return (
@@ -19,6 +20,7 @@ export default function Main(props) {
         <Techs />
         <AboutMe />
         <Portfolio />
+        <Footer />
       </section>
     </>
   )
