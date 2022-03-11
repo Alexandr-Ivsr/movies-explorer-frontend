@@ -60,3 +60,54 @@
 	text-align: center;
 	box-sizing: border-box;
 }
+
+@media (min-width: 768px) {
+	.techs {
+		padding: 90px 50px
+	}
+	.techs__title {
+		margin: 0 0 104px;
+		font-size: 22px;
+		line-height: 27px;
+	}
+	.techs__title::after {
+		bottom: -23px;
+	}
+	.techs__subtitle {
+		margin-bottom: 22px;
+		font-size: 50px;
+		line-height: 58px;
+	}
+	.techs__description {
+		font-size: 12px;
+		line-height: 18px;
+		margin-bottom: 83px;
+		max-width: 436px;
+	}
+	.techs__list {
+		display: flex;
+		gap: 10px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.techs {
+		padding: 100px 70px;
+	}
+	.techs__title {
+		margin-bottom: 114px;
+	}
+	.techs__subtitle {
+		margin-bottom: 26px;
+	}
+	.techs__description {
+		font-size: 14px;
+		line-height: 20px;
+		max-width: 460px;
+		margin-bottom: 100px;
+	}
+	.techs__list-item {
+		font-size: 14px;
+		line-height: 17px;
+	}
+}

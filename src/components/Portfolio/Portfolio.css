@@ -44,3 +44,34 @@
 	line-height: 28px;
 	letter-spacing: -0.04em;
 }
+
+@media (min-width: 768px) {
+	.portfolio {
+		padding: 90px 50px;
+	}
+	.portfolio__title {
+		margin-bottom: 50px;
+		font-size: 18px;
+		line-height: 20px;
+	}
+	.portfolio__link {
+		font-size: 28px;
+		line-height: 50px;
+	}
+	.portfolio__symbol-arrow {
+		font-size: 28px;
+		line-height: 60px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.portfolio {
+		padding: 110px 70px 125px;
+	}
+	.portfolio__link {
+		font-size: 30px;
+	}
+	.portfolio__symbol-arrow {
+		font-size: 30px;
+	}
+}

@@ -19,6 +19,7 @@
   text-align: center;
   font-weight: 400;
   letter-spacing: -0.04em;
+  max-width: 730px;
 }
 
 @media (min-width: 768px) {
@@ -30,7 +31,3 @@
     line-height: 58px;
   }
 }
-
-/* @media (min-width: 1280px) {
-
-} */
