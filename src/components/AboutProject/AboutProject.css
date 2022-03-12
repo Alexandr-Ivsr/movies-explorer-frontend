@@ -86,39 +86,48 @@
 	.about-project {
 		padding: 90px 50px;
 	}
+	
 	.about-project__title {
 		margin: 0 0 94px;
 		font-size: 22px;
 		line-height: 27px;
 	}
+
 	.about-project__title::after {
 		bottom: -23px;
 	}
+
 	.about-project__info-wrapper {
 		display: flex;
 		gap: 30px;
 		margin-bottom: 93px;
 	}
+
 	.about-project__info {
 		margin-bottom: 0;
 	}
+
 	.about-project__subtitle {
 		margin: 0 0 22px;
 		font-size: 20px;
 		line-height: 24px
 	}
+
 	.about-project__info-description {
 		font-size: 12px;
 		line-height: 18px;
 	}
+
 	.about-project__time-item_position_left {
 		min-width: 140px;
 	}
+
 	.about-project__time-text {
 		padding: 9px 10px;
 		font-size: 14px;
 		line-height: 17px;
 	}
+
 	.about-project__time-text_color_gray {
 		padding-top: 14px;
 	}
@@ -128,17 +137,21 @@
 	.about-project {
 		padding: 110px 70px;
 	}
+
 	.about-project__subtitle {
 		margin: 0 0 26px;
 	}
+
 	.about-project__info-wrapper {
 		margin-bottom: 110px;
 		gap: 40px;
 	}
+
 	.about-project__info-description {
 		font-size: 14px;
 		line-height: 20px;
 	}
+	
 	.about-project__time-item_position_left {
 		min-width: 228px;
 	}

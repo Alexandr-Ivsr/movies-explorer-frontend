@@ -10,10 +10,6 @@
 	margin: 0 0 40px;
 }
 
-/* .portfolio__links {
-	
-} */
-
 .portfolio__link {
 	margin-bottom: 20px;
 	padding-bottom: 19px;
@@ -49,15 +45,18 @@
 	.portfolio {
 		padding: 90px 50px;
 	}
+
 	.portfolio__title {
 		margin-bottom: 50px;
 		font-size: 18px;
 		line-height: 20px;
 	}
+
 	.portfolio__link {
 		font-size: 28px;
 		line-height: 50px;
 	}
+
 	.portfolio__symbol-arrow {
 		font-size: 28px;
 		line-height: 60px;
@@ -68,9 +67,11 @@
 	.portfolio {
 		padding: 110px 70px 125px;
 	}
+
 	.portfolio__link {
 		font-size: 30px;
 	}
+	
 	.portfolio__symbol-arrow {
 		font-size: 30px;
 	}

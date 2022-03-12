@@ -13,15 +13,15 @@ export default function Main(props) {
   return (
     <>
       <Header isMainPage={true} />
-      <section className="main">
+      <main className="main">
         <Promo />
         <NavTab />
         <AboutProject />
         <Techs />
         <AboutMe />
         <Portfolio />
-        <Footer />
-      </section>
+      </main>
+      <Footer />
     </>
   )
 };
