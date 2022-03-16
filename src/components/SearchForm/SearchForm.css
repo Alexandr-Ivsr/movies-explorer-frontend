@@ -2,10 +2,6 @@
   padding: 60px 10px 55px;
 }
 
-.search-form__form {
-
-}
-
 .search-form__form-wrapper {
   position: relative;
 }
@@ -45,6 +41,12 @@
   position: absolute;
   right: 6px;
   top: 9px;
+  cursor: pointer;
+  transition: .2s all ease-in-out;
+}
+
+.search-form__form-button:hover {
+  opacity: .5;
 }
 
 .search-form__filter {
@@ -132,6 +134,7 @@
 
   .search-form__form-wrapper {
     flex-grow: 1;
+    max-width: 932px;
   }
 
   .search-form__input-text {

@@ -14,6 +14,9 @@ export default function Movies(props) {
         <SearchForm />
         {/* <Preloader /> */}
         <MoviesCardList />
+        <div className="movies__button-wrapper">
+          <button className="movies__button-append">Ещё</button>
+        </div>
       </main>
       <Footer />
     </>
