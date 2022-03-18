@@ -19,6 +19,7 @@
   padding: 144px 10px 50px;
   box-sizing: border-box;
   background-color: #FFFFFF;
+  position: relative;
 }
 
 .navigation__links {
@@ -64,6 +65,28 @@
   padding-left: 24px;
 }
 
+.navigation__button-close {
+  width: 22px;
+  height: 22px;
+  border: none;
+  padding: 0;
+  box-sizing: border-box;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: .2s opacity ease-in-out;
+}
+
+.navigation__button-close:hover {
+  opacity: .6;
+}
+
+.navigation__button-close-icon {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   .navigation__wrapper {
     padding: 160px 10px 90px;
@@ -104,5 +127,9 @@
 
   .navigation__link_type_custom {
     font-weight: 400;
+  }
+
+  .navigation__button-close {
+    display: none;
   }
 }

@@ -19,7 +19,7 @@ export default function Header(props) {
           <button className="header__button-menu" onClick={() => setIsNavigate(true)}>
             <img className="header__button-menu-image" src={BurgerMenu} alt="иконка" />
           </button>
-          <Navigation className={`header__navigate ${isNavigate ? "header__navigate_active" : ""}`} />
+          <Navigation setIsNavigate={setIsNavigate} className={`header__navigate ${isNavigate ? "header__navigate_active" : ""}`} />
         </>
       ) : (
         <div className="header__wrapper">

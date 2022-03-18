@@ -1,6 +1,7 @@
 import React from 'react';
 import './Navigation.css';
 import ProfileIcon from '../../images/profile-icon.svg';
+import ButtonClose from '../../images/button-close.svg'
 
 export default function Navigation(props) {
   return (
@@ -15,6 +16,9 @@ export default function Navigation(props) {
           Аккаунт
           <img className="navigation__profile-icon" src={ProfileIcon} alt="иконка профиля" />
         </a>
+        <button className="navigation__button-close" onClick={() => props.setIsNavigate(false)}>
+          <img className="navigation__button-close-icon" src={ButtonClose} alt="иконка закрытия" />
+        </button>
       </div>
     </div>
   );
