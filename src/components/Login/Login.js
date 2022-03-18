@@ -14,11 +14,11 @@ export default function Login(props) {
           <div className="form__inputs-wrapper form__inputs-wrapper_type_login">
             <label className="form__label-input">
               E-mail
-              <input required type="email" className="form__input" placeholder="Введите email" />
+              <input required type="email" className="form__input" placeholder="Введите email" name="email" />
             </label>
             <label className="form__label-input">
               Пароль
-              <input required type="password" className="form__input form__input_type_error" placeholder="Введите пароль" />
+              <input required type="password" className="form__input form__input_type_error" placeholder="Введите пароль" name="password" />
               <span className="form__input-error">Что-то пошло не так...</span>
             </label>
           </div>

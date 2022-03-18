@@ -59,6 +59,32 @@
   opacity: .5;
 }
 
+.header__button-menu {
+  width: 40px;
+  height: 43px;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+  transition: .2s opacity ease-in-out;
+}
+
+.header__button-menu:hover {
+  opacity: .5;
+}
+
+.header__button-menu-image {
+  width: 100%;
+}
+
+.header__navigate {
+  display: none;
+}
+
+.header__navigate_active {
+  display: block;
+}
+
 @media (min-width: 768px) {
   .header {
     padding: 18px 30px;
@@ -73,10 +99,23 @@
     font-size: 12px;
     padding: 8px 20px;
   }
+
+  .header__button-menu {
+    width: 44px;
+    height: 44px;
+  }
 }
 
 @media (min-width: 1280px) {
   .header {
     padding: 18px 70px;
+  }
+
+  .header__button-menu {
+    display: none;
+  }
+
+  .header__navigate {
+    display: block;
   }
 }
