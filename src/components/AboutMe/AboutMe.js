@@ -3,12 +3,12 @@ import './AboutMe.css';
 import imageUser from '../../images/cat.webp';
 
 export default function AboutMe(props) {
-	return (
-		<section className="about-me">
-			<h2 className="about-me__title">Студент</h2>
-			<div className="about-me__wrapper">
-				<img src={imageUser} className="about-me__photo" alt="мое фото" />
-				<div className="about-me__info">
+  return (
+    <section className="about-me" id={'about-student'}>
+      <h2 className="about-me__title">Студент</h2>
+      <div className="about-me__wrapper">
+        <img src={imageUser} className="about-me__photo" alt="мое фото" />
+        <div className="about-me__info">
           <div className="about-me__info-wrapper">
             <h3 className="about-me__subtitle">Александр</h3>
             <p className="about-me__profession">Фронтенд-разработчик, 26 лет</p>
@@ -17,11 +17,15 @@ export default function AboutMe(props) {
             </p>
           </div>
           <div className="about-me__links" >
-            <a className="about-me__link" href="https://ru-ru.facebook.com/">Facebook</a>
-            <a className="about-me__link" href="https://github.com/Alexandr-Ivsr">Github</a>
+            <a className="about-me__link" href="https://ru-ru.facebook.com/" rel="noreferrer" target="_blank">
+              Facebook
+            </a>
+            <a className="about-me__link" href="https://github.com/Alexandr-Ivsr" rel="noreferrer" target="_blank">
+              Github
+            </a>
           </div>
-				</div>
-			</div>
-		</section>
-	)
+        </div>
+      </div>
+    </section>
+  )
 };

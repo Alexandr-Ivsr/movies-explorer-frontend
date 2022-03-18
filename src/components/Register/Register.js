@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom"
 import './Register.css';
 import HeaderLogo from '../../images/logo-header.svg';
 
@@ -6,9 +7,9 @@ export default function Register(props) {
   return (
     <section className="form">
       <div className="form__container">
-        <a className="form__logotype" href="/">
+        <Link className="form__logotype" to="/">
           <img className="form__logotype-image" src={HeaderLogo} alt="логотип" />
-        </a>
+        </Link>
         <h2 className="form__title">Добро пожаловать!</h2>
         <form className="form__form">
           <div className="form__inputs-wrapper">
@@ -30,7 +31,7 @@ export default function Register(props) {
         </form>
         <p className="form__wrapper">
           <span className="form__wrapper-text">Уже зарегистрированы?</span>
-          <a className="form__wrapper-link" href="/signin">Войти</a>
+          <Link className="form__wrapper-link" to="/signin">Войти</Link>
         </p>
       </div>
     </section>

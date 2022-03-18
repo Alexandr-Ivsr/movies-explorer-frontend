@@ -67,6 +67,7 @@
   border: none;
   cursor: pointer;
   transition: .2s opacity ease-in-out;
+  background-color: transparent;
 }
 
 .header__button-menu:hover {
