@@ -25,7 +25,7 @@ export default function AboutProject(props) {
           <p className="about-project__time-text about-project__time-text_color_gray">Back-end</p>
         </div>
         <div className="about-project__time-item">
-          <p className="about-project__time-text">4 недели</p>
+          <p className="about-project__time-text about-project__time-text_background-color_gray">4 недели</p>
           <p className="about-project__time-text about-project__time-text_color_gray">Front-end</p>
         </div>
       </div>
