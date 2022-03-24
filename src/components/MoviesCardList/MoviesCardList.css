@@ -1,0 +1,12 @@
+.moviescardlist {
+  padding: 40px 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (min-width: 1280px) {
+  .moviescardlist {
+    padding: 70px 70px 10px;
+  }
+}

@@ -1,0 +1,34 @@
+.promo {
+  background-color: #F3C1F8;
+  background-image: url('../../images/background-logo-header.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 570px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.promo__title {
+  margin: 0 auto;
+  font-size: 31px;
+  line-height: 39px;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  max-width: 730px;
+}
+
+@media (min-width: 768px) {
+  .promo {
+    background-size: 320px 320px;
+  }
+  
+  .promo__title {
+    font-size: 50px;
+    line-height: 58px;
+  }
+}
