@@ -2,6 +2,7 @@ import React from 'react';
 import './ProfileForm.css';
 
 export default function ProfileForm(props) {
+  
   const onEdit = () => {
     props.onHandleEdit();
   }

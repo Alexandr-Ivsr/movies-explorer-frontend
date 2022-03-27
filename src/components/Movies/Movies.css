@@ -1,5 +1,29 @@
 .movies__notfound {
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
+}
+
+.movies__error {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  color:rgb(216, 22, 22);
+}
+
+@media (min-width: 768px) {
+  .movies__notfound {
+    font-size: 22px;
+  }
+
+  .movies__error {
+    font-size: 18px;
+    padding: 40px 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .movies__error {
+    font-size: 22px;
+  }
 }

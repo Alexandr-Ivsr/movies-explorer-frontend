@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 export default function SavedMovies(props) {
   return (
     <>
-      <Header isLoggedIn={true} />
+      <Header isLoggedIn={props.isLoggedIn} />
       <SearchForm />
       <MoviesCardList isSavedMovies={true} />
       <Footer />

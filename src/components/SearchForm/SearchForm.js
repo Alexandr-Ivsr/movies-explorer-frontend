@@ -17,6 +17,7 @@ export default function SearchForm(props) {
 
   const handleCheckBox = () => {
     setIsCheckBoxActive(!isCheckBoxActive);
+    props.onsetIsCheckBoxActive(!isCheckBoxActive);
   }
 
   // const filteredByCheckBox = () => {

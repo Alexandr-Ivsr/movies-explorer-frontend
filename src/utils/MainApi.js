@@ -1,11 +1,11 @@
-export const BASE_URL = 'https://api.explorer-movie.nomoredomains.work';
+export const BASE_URL = 'http://localhost:3001';
 
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
   else {
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(`Ошибка ${res.status}`);
   }
 }
 
@@ -80,5 +80,5 @@ export const updateCurrentUserInfo = ({ email, name }) => {
 }
 
 export const addMovie = () => {
-  
+
 }

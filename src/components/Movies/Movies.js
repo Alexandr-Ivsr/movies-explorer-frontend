@@ -8,10 +8,10 @@ import Footer from '../Footer/Footer';
 import * as MoviesApi from '../../utils/MoviesApi';
 
 export default function Movies(props) {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isCheckBoxActive, setIsCheckBoxActive] = useState(false);
 
   // запрос фильмов, их сохранение и фильтр
   const showFilms = (inputValue, isCheckBoxActive) => {
@@ -54,15 +54,11 @@ export default function Movies(props) {
       })
   }
 
-  const handleAppendCards = () => {
-
-  }
-
   return (
     <>
-      <Header />
+      <Header LoggedIn={props.LoggedIn} />
       <main className="movies">
-        <SearchForm onShowFilms={showFilms} />
+        <SearchForm onShowFilms={showFilms} onsetIsCheckBoxActive={setIsCheckBoxActive} />
         {isLoading ? <Preloader /> : null}
         {isError ?
           (<div className="movies__error">
@@ -70,7 +66,7 @@ export default function Movies(props) {
           </div>) : null}
         {!isLoading && !isError ?
           movies.length > 0 ? (
-            <MoviesCardList moviesCards={movies} onHandleAppendCards={handleAppendCards} />
+            <MoviesCardList moviesCards={movies} isCheckBoxActive={isCheckBoxActive} />
           ) : (
             <div className="movies__notfound">Ничего не найдено</div>
           )
