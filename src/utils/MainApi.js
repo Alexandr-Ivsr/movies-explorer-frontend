@@ -5,7 +5,11 @@ const checkResponse = (res) => {
     return res.json();
   }
   else {
-    return Promise.reject(`Ошибка ${res.status}`);
+    return res.json()
+      .then((data) => {
+        console.log(data);
+        return Promise.reject(data);
+      })
   }
 }
 

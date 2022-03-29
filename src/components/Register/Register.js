@@ -81,6 +81,7 @@ export default function Register(props) {
               <span className="form__input-error">Что-то пошло не так...</span>
             </label>
           </div>
+          {props.isRequestWrong ? (<span className="form__submit-error" >{props.isErrorMessage}</span>) : ''}
           <button className="form__form-button" type="submit">Зарегистрироваться</button>
         </form>
         <p className="form__wrapper">

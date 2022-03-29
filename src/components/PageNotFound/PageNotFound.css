@@ -33,6 +33,7 @@
   border: none;
   font-size: 12px;
   line-height: 15px;
+  background-color: transparent;
   cursor: pointer;
   transition: .2s opacity ease-in-out;
 }

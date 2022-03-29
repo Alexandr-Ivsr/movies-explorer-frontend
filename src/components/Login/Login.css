@@ -84,6 +84,10 @@
   color: #FF4062;
 }
 
+.form__submit-error {
+  
+}
+
 .form__form-button {
   width: 100%;
   color: #FFFFFF;

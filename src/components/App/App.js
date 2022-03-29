@@ -16,6 +16,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [isRequestWrong, setIsRequestWrong] = useState(false);
+  const [isErrorMessage, setIsErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const isAuth = localStorage.getItem('isAuth') === 'true';
@@ -27,7 +29,6 @@ function App() {
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
-        // navigate(-1);
       })
       .catch((err) => {
         console.log(err);
@@ -39,9 +40,12 @@ function App() {
     MainApi.signup(data)
       .then((res) => {
         navigate('/signin');
+        setIsRequestWrong(false);
       })
       .catch((err) => {
-        console.log(err, err.status, err.message);
+        console.log(err);
+        setIsRequestWrong(true);
+        setIsErrorMessage(err.message);
       })
   }
 
@@ -51,11 +55,15 @@ function App() {
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
+        setIsRequestWrong(false);
         navigate('/movies');
         localStorage.setItem('isAuth', true);
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err);
+        setIsRequestWrong(true);
+        setIsErrorMessage(err.message);
+
       })
   }
 
@@ -136,6 +144,8 @@ function App() {
               <Login
                 onSigninUser={handleSigninUser}
                 loggedIn={loggedIn}
+                isRequestWrong={isRequestWrong}
+                isErrorMessage={isErrorMessage}
               />
             }>
           </Route>
@@ -145,6 +155,8 @@ function App() {
               <Register
                 onSignupUser={handleSignupUser}
                 loggedIn={loggedIn}
+                isRequestWrong={isRequestWrong}
+                isErrorMessage={isErrorMessage}
               />
             }>
           </Route>

@@ -80,6 +80,12 @@
   color: #FF4062;
 }
 
+.form__submit-error {
+  display: block;
+  padding: 0 6px 10px;
+  color: #FF4062;
+}
+
 .form__form-button {
   width: 100%;
   color: #FFFFFF;
