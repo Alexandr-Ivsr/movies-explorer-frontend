@@ -104,6 +104,10 @@
   opacity: .7;
 }
 
+.form__form-button_type_disabled {
+  background-color: #e6e6e6;
+}
+
 .form__wrapper {
   margin: 0;
   text-align: center;

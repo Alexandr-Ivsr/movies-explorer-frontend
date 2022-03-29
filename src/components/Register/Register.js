@@ -1,13 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form";
 import './Register.css';
 import HeaderLogo from '../../images/logo-header.svg';
 
 export default function Register(props) {
-  const [nameValue, setNameValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+      isValid,
+    }
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    }
+  });
   const navigate = useNavigate();
+  console.log('isValid', isValid);
 
   useEffect(() => {
     if (props.loggedIn) {
@@ -15,26 +29,9 @@ export default function Register(props) {
     }
   }, [props.loggedIn]);
 
-  const handleChangeName = (evt) => {
-    setNameValue(evt.target.value);
-  }
-
-  const handleChangeEmail = (evt) => {
-    setEmailValue(evt.target.value);
-  }
-
-  const handleChangePassword = (evt) => {
-    setPasswordValue(evt.target.value);
-  }
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-
-    props.onSignupUser({
-      name: nameValue,
-      email: emailValue,
-      password: passwordValue
-    })
+  const onSubmit = (data) => {
+    props.onSignupUser(data);
+    console.log(data);
   }
 
   return (
@@ -44,45 +41,72 @@ export default function Register(props) {
           <img className="form__logotype-image" src={HeaderLogo} alt="логотип" />
         </Link>
         <h2 className="form__title">Добро пожаловать!</h2>
-        <form className="form__form" onSubmit={handleSubmit}>
+        <form className="form__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="form__inputs-wrapper">
             <label className="form__label-input">
               Имя
               <input
-                value={nameValue}
-                onChange={handleChangeName}
-                required type="text"
-                className="form__input"
+                {...register('name', {
+                  required: 'Поле name не может быть пустым',
+                  minLength: {
+                    value: 2,
+                    message: 'Длина поля name должна быть не меньше 2 символов',
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: 'Длина поля name должна быть не больше 30 символов',
+                  },
+                  pattern: {
+                    value: /[A-Za-zА-Яа-я-\s]+$/,
+                    message: 'Поле name должно содержать латиницу, кирилицу, пробел или дефис',
+                  }
+                })}
+                type="text"
+                className={`form__input ${errors?.name ? 'form__input_type_error' : ''}`}
                 placeholder="Введите имя"
-                name="name"
               />
+              {errors?.name && <span className="form__input-error">{errors?.name?.message}</span>}
             </label>
             <label className="form__label-input">
               E-mail
               <input
-                required type="email"
-                className="form__input"
-                value={emailValue}
-                onChange={handleChangeEmail}
+                {...register('email', {
+                  required: 'Поле email не может быть пустым',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Введен некорректный адрес почты',
+                  },
+                })}
+                type="email"
+                className={`form__input ${errors?.email ? 'form__input_type_error' : ''}`}
                 placeholder="Введите email"
-                name="email"
               />
+              {errors?.email && <span className="form__input-error">{errors?.email?.message}</span>}
             </label>
             <label className="form__label-input">
               Пароль
               <input
-                required type="password"
-                className="form__input form__input_type_error"
-                value={passwordValue}
-                onChange={handleChangePassword}
+                {...register('password', {
+                  required: 'Поле password не может быть пустым',
+                  minLength: {
+                    value: 8,
+                    message: 'Поле password должно содержать минимум 8 символов',
+                  },
+                })}
+                type="password"
+                className={`form__input ${errors?.password ? 'form__input_type_error' : ''}`}
                 placeholder="Введите пароль"
-                name="password"
               />
-              <span className="form__input-error">Что-то пошло не так...</span>
+              {errors?.password && <span className="form__input-error">{errors?.password?.message}</span>}
             </label>
           </div>
           {props.isRequestWrong ? (<span className="form__submit-error" >{props.isErrorMessage}</span>) : ''}
-          <button className="form__form-button" type="submit">Зарегистрироваться</button>
+          <button
+            className={`form__form-button ${!isValid ? 'form__form-button_type_disabled' : ''}`}
+            disabled={!isValid}
+            type="submit">
+            Зарегистрироваться
+          </button>
         </form>
         <p className="form__wrapper">
           <span className="form__wrapper-text">Уже зарегистрированы?</span>

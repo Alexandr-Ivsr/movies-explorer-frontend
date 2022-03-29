@@ -21,7 +21,7 @@ function App() {
   const navigate = useNavigate();
 
   const isAuth = localStorage.getItem('isAuth') === 'true';
-  console.log(isAuth);
+  console.log('isAuth', isAuth);
 
   // проверка токена при запуске приложения
   useEffect(() => {
@@ -139,10 +139,10 @@ function App() {
             }>
           </Route>
           <Route
-            path='/signin'
+            path='/signup'
             element={
-              <Login
-                onSigninUser={handleSigninUser}
+              <Register
+                onSignupUser={handleSignupUser}
                 loggedIn={loggedIn}
                 isRequestWrong={isRequestWrong}
                 isErrorMessage={isErrorMessage}
@@ -150,10 +150,10 @@ function App() {
             }>
           </Route>
           <Route
-            path='/signup'
+            path='/signin'
             element={
-              <Register
-                onSignupUser={handleSignupUser}
+              <Login
+                onSigninUser={handleSigninUser}
                 loggedIn={loggedIn}
                 isRequestWrong={isRequestWrong}
                 isErrorMessage={isErrorMessage}
