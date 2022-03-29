@@ -13,7 +13,7 @@ export default function Header(props) {
       <Link className="header__link" to="/">
         <img className="header__link-logo" src={HeaderLogo} alt="Логотип" />
       </Link>
-      {props.LoggedIn ? (
+      {props.loggedIn ? (
         <>
           <button className="header__button-menu" onClick={() => setIsNavigate(true)}>
             <img className="header__button-menu-image" src={BurgerMenu} alt="иконка" />

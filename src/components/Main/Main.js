@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Main.css';
 import Promo from '../Promo/Promo';
 import Header from '../Header/Header';
@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer';
 export default function Main(props) {
   return (
     <>
-      <Header isMainPage={true} LoggedIn={props.LoggedIn} />
+      <Header isMainPage={true} loggedIn={props.loggedIn} />
       <main className="main">
         <Promo />
         <NavTab />

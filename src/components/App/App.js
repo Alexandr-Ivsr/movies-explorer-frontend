@@ -13,9 +13,13 @@ import * as MainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
-  const [LoggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const navigate = useNavigate();
+
+  const isAuth = localStorage.getItem('isAuth') === 'true';
+  console.log(isAuth);
 
   // проверка токена при запуске приложения
   useEffect(() => {
@@ -23,6 +27,7 @@ function App() {
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
+        // navigate(-1);
       })
       .catch((err) => {
         console.log(err);
@@ -47,6 +52,7 @@ function App() {
         setLoggedIn(true);
         setCurrentUser(res);
         navigate('/movies');
+        localStorage.setItem('isAuth', true);
       })
       .catch((err) => {
         console.log(err.message);
@@ -58,7 +64,20 @@ function App() {
     MainApi.signout()
       .then((res) => {
         console.log(res.message);
-        navigate('/signin');
+        navigate('/');
+        localStorage.clear();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const handleUpdateCurrentUserInfo = (data, setIsEdit) => {
+    MainApi.updateCurrentUserInfo(data, setIsEdit)
+      .then((res) => {
+        setCurrentUser(res);
+        setIsEdit(false);
+        setIsTooltipOpen(true);
       })
       .catch((err) => {
         console.log(err);
@@ -69,13 +88,72 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Routes>
-          <Route path='/' element={<Main LoggedIn={LoggedIn} />}></Route>
-          <Route path='/movies' element={<Movies LoggedIn={LoggedIn} />}></Route>
-          <Route path='/saved-movies' element={<SavedMovies LoggedIn={LoggedIn} />}></Route>
-          <Route path='/profile' element={<Profile LoggedIn={LoggedIn} onSignoutUser={handleSignoutUser} />}></Route>
-          <Route path='/signin' element={<Login onSigninUser={handleSigninUser} />}></Route>
-          <Route path='/signup' element={<Register onSignupUser={handleSignupUser} />}></Route>
-          <Route path='/pagenotfound' element={<PageNotFound />}></Route>
+          <Route
+            path='/'
+            element={
+              <Main
+                loggedIn={loggedIn}
+              />
+            }>
+          </Route>
+          <Route
+            path='/movies'
+            element={
+              <RequireAuth
+                component={Movies}
+                loggedIn={loggedIn}
+                isAuth={isAuth}
+              />
+            }>
+          </Route>
+          <Route
+            path='/saved-movies'
+            element={
+              <RequireAuth
+                component={SavedMovies}
+                loggedIn={loggedIn}
+                isAuth={isAuth}
+              />
+            }>
+          </Route>
+          <Route
+            path='/profile'
+            element={
+              <RequireAuth
+                component={Profile}
+                loggedIn={loggedIn}
+                onSignoutUser={handleSignoutUser}
+                onUpdateCurrentUser={handleUpdateCurrentUserInfo}
+                isTooltipOpen={isTooltipOpen}
+                setIsTooltipOpen={setIsTooltipOpen}
+                isAuth={isAuth}
+              />
+            }>
+          </Route>
+          <Route
+            path='/signin'
+            element={
+              <Login
+                onSigninUser={handleSigninUser}
+                loggedIn={loggedIn}
+              />
+            }>
+          </Route>
+          <Route
+            path='/signup'
+            element={
+              <Register
+                onSignupUser={handleSignupUser}
+                loggedIn={loggedIn}
+              />
+            }>
+          </Route>
+          <Route
+            path='*'
+            element={
+              <PageNotFound />
+            }>
+          </Route>
         </Routes>
       </div>
     </CurrentUserContext.Provider>

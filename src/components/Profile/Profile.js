@@ -3,15 +3,12 @@ import './Profile.css';
 import Header from '../Header/Header';
 import ProfileForm from '../ProfileForm/ProfileForm';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import Tooltip from '../Tooltip/Tooltip';
 
 
 export default function Profile(props) {
   const [isEdit, setIsEdit] = useState(false);
   const userInfo = React.useContext(CurrentUserContext);
-
-  const handleEdit = () => {
-    setIsEdit(false);
-  }
 
   const handleSignout = () => {
     props.onSignoutUser();
@@ -19,12 +16,12 @@ export default function Profile(props) {
 
   return (
     <>
-      <Header LoggedIn={props.LoggedIn} />
+      <Header loggedIn={props.loggedIn} />
       <section className="profile">
         <div className="profile__container">
           <h1 className="profile__title">{`Привет, ${userInfo.name}!`}</h1>
           {isEdit ? (
-            <ProfileForm onHandleEdit={handleEdit} />
+            <ProfileForm onUpdateCurrentUser={props.onUpdateCurrentUser} setIsEdit={setIsEdit} isEdit={isEdit}  />
           ) : (
             <>
               <div className="profile__info">
@@ -40,8 +37,9 @@ export default function Profile(props) {
               <button className="profile__button-edit" onClick={() => setIsEdit(true)}>Редактировать</button>
             </>
           )}
-          <a className="profile__link" onClick={handleSignout} href="/signin">Выйти из аккаунта</a>
+          <a className="profile__link" onClick={handleSignout} href="/">Выйти из аккаунта</a>
         </div>
+        <Tooltip setIsTooltipOpen={props.setIsTooltipOpen} isTooltipOpen={props.isTooltipOpen} />
       </section>
     </>
   )

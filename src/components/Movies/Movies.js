@@ -13,37 +13,32 @@ export default function Movies(props) {
   const [isError, setIsError] = useState(false);
   const [isCheckBoxActive, setIsCheckBoxActive] = useState(false);
 
-  // запрос фильмов, их сохранение и фильтр
+  useEffect(() => {
+    if (localStorage.getItem('filteredMovies')) {
+      setMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+    }
+  }, []);
+
+  // запрос фильмов, их сохранение и фильтр по ключевому слову
   const showFilms = (inputValue, isCheckBoxActive) => {
     setIsLoading(true);
     const searchValue = inputValue.toLowerCase();
 
     MoviesApi.getAllMovies()
       .then((res) => {
-        localStorage.setItem('movies', JSON.stringify(res)); // добавить здесь сохранение состояние чекбокса и текста инпута в localstorage
+        localStorage.setItem('movies', JSON.stringify(res));
         localStorage.setItem('inputValue', inputValue);
         localStorage.setItem('isCheckBoxActive', isCheckBoxActive);
-        // вынести в useEffect при монтировании
-        const saveCheckBoxState = localStorage.getItem('isCheckBoxActive') === 'true';
 
         const arrayMovies = JSON.parse(localStorage.getItem('movies'));
 
-        // найти фильм в этом массиве по ключевым словам
         const filteredArrayByName = arrayMovies.filter((item) => {
           return (!!item.nameRU && item.nameRU.includes(searchValue)) || (!!item.description && item.description.includes(searchValue))
         })
 
-        // найти фильм из отфильтрованных по длительности
-        if (isCheckBoxActive) {
-          const filteredArrayByDuration = filteredArrayByName.filter((item) => {
-            return item.duration <= 40;
-          })
-          setMovies(filteredArrayByDuration);
-          console.log(filteredArrayByDuration);
-        } else {
-          setMovies(filteredArrayByName);
-          console.log(filteredArrayByName);
-        }
+        setMovies(filteredArrayByName);
+        localStorage.setItem('filteredMovies', JSON.stringify(filteredArrayByName));
+        console.log(filteredArrayByName);
       })
       .catch((err) => {
         setIsError(true);
@@ -56,7 +51,7 @@ export default function Movies(props) {
 
   return (
     <>
-      <Header LoggedIn={props.LoggedIn} />
+      <Header loggedIn={props.loggedIn} />
       <main className="movies">
         <SearchForm onShowFilms={showFilms} onsetIsCheckBoxActive={setIsCheckBoxActive} />
         {isLoading ? <Preloader /> : null}

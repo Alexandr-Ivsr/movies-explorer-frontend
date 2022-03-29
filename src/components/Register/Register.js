@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom"
 import './Register.css';
 import HeaderLogo from '../../images/logo-header.svg';
 
@@ -7,6 +7,13 @@ export default function Register(props) {
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (props.loggedIn) {
+      navigate('/');
+    }
+  }, [props.loggedIn]);
 
   const handleChangeName = (evt) => {
     setNameValue(evt.target.value);

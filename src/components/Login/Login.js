@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom"
 import './Login.css';
 import HeaderLogo from '../../images/logo-header.svg';
 
 export default function Login(props) {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (props.loggedIn) {
+      navigate('/');
+    }
+  }, [props.loggedIn]);
 
   const handleChangeEmail = (evt) => {
     setEmailValue(evt.target.value);
@@ -16,7 +23,7 @@ export default function Login(props) {
   }
 
   const handleSubmit = (evt) => {
-    evt.preventDefault(evt);
+    evt.preventDefault();
 
     props.onSigninUser({
       email: emailValue,
