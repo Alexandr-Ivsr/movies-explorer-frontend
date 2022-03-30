@@ -112,6 +112,12 @@
   background-color: #e6e6e6;
 }
 
+.form__form-button_type_disabled:hover {
+  background-color: #e6e6e6;
+  cursor: auto;
+  opacity: 1;
+}
+
 .form__wrapper {
   margin: 0;
   text-align: center;

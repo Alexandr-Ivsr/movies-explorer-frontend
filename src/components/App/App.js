@@ -16,7 +16,9 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-  const [isRequestWrong, setIsRequestWrong] = useState(false);
+  const [isLoginRequestWrong, setIsLoginRequestWrong] = useState(false);
+  const [isRegisterRequestWrong, setIsRegisterRequestWrong] = useState(false);
+  const [isUpdateUserRequestWrong, setIsUpdateUserRequestWrong] = useState(false);
   const [isErrorMessage, setIsErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -40,11 +42,11 @@ function App() {
     MainApi.signup(data)
       .then((res) => {
         navigate('/signin');
-        setIsRequestWrong(false);
+        setIsRegisterRequestWrong(false);
       })
       .catch((err) => {
         console.log(err);
-        setIsRequestWrong(true);
+        setIsRegisterRequestWrong(true);
         setIsErrorMessage(err.message);
       })
   }
@@ -55,13 +57,13 @@ function App() {
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
-        setIsRequestWrong(false);
+        setIsLoginRequestWrong(false);
         navigate('/movies');
         localStorage.setItem('isAuth', true);
       })
       .catch((err) => {
         console.log(err);
-        setIsRequestWrong(true);
+        setIsLoginRequestWrong(true);
         setIsErrorMessage(err.message);
 
       })
@@ -84,11 +86,14 @@ function App() {
     MainApi.updateCurrentUserInfo(data, setIsEdit)
       .then((res) => {
         setCurrentUser(res);
+        setIsUpdateUserRequestWrong(false);
         setIsEdit(false);
         setIsTooltipOpen(true);
       })
       .catch((err) => {
         console.log(err);
+        setIsUpdateUserRequestWrong(true);
+        setIsErrorMessage(err.message);
       })
   }
 
@@ -135,6 +140,8 @@ function App() {
                 isTooltipOpen={isTooltipOpen}
                 setIsTooltipOpen={setIsTooltipOpen}
                 isAuth={isAuth}
+                isUpdateUserRequestWrong={isUpdateUserRequestWrong}
+                isErrorMessage={isErrorMessage}
               />
             }>
           </Route>
@@ -144,7 +151,7 @@ function App() {
               <Register
                 onSignupUser={handleSignupUser}
                 loggedIn={loggedIn}
-                isRequestWrong={isRequestWrong}
+                isRegisterRequestWrong={isRegisterRequestWrong}
                 isErrorMessage={isErrorMessage}
               />
             }>
@@ -155,7 +162,7 @@ function App() {
               <Login
                 onSigninUser={handleSigninUser}
                 loggedIn={loggedIn}
-                isRequestWrong={isRequestWrong}
+                isLoginRequestWrong={isLoginRequestWrong}
                 isErrorMessage={isErrorMessage}
               />
             }>

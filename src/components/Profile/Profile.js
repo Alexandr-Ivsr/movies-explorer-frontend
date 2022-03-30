@@ -21,7 +21,13 @@ export default function Profile(props) {
         <div className="profile__container">
           <h1 className="profile__title">{`Привет, ${userInfo.name}!`}</h1>
           {isEdit ? (
-            <ProfileForm onUpdateCurrentUser={props.onUpdateCurrentUser} setIsEdit={setIsEdit} isEdit={isEdit}  />
+            <ProfileForm
+              onUpdateCurrentUser={props.onUpdateCurrentUser}
+              setIsEdit={setIsEdit}
+              isEdit={isEdit}
+              isUpdateUserRequestWrong={props.isUpdateUserRequestWrong}
+              isErrorMessage={props.isErrorMessage}
+            />
           ) : (
             <>
               <div className="profile__info">

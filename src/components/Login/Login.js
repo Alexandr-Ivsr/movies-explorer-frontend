@@ -2,10 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom"
 import './Login.css';
 import HeaderLogo from '../../images/logo-header.svg';
+import { useForm } from 'react-hook-form';
 
 export default function Login(props) {
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+      isValid,
+    }
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: '',
+    }
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,25 +27,13 @@ export default function Login(props) {
     }
   }, [props.loggedIn]);
 
-  const handleChangeEmail = (evt) => {
-    setEmailValue(evt.target.value);
-  }
-
-  const handleChangePassword = (evt) => {
-    setPasswordValue(evt.target.value);
-  }
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-
-    props.onSigninUser({
-      email: emailValue,
-      password: passwordValue,
-    });
+  const onSubmit = (data) => {
+    props.onSigninUser(data);
+    console.log(data);
   }
 
   return (
-    <section className="form" onSubmit={handleSubmit}>
+    <section className="form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form__container">
         <Link className="form__logotype" to="/">
           <img className="form__logotype-image" src={HeaderLogo} alt="логотип" />
@@ -43,29 +44,43 @@ export default function Login(props) {
             <label className="form__label-input">
               E-mail
               <input
-                required type="email"
-                className="form__input"
-                value={emailValue}
-                onChange={handleChangeEmail}
+                {...register('email', {
+                  required: 'Поле email не может быть пустым',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Введен некорректный адрес почты',
+                  },
+                })}
+                type="email"
+                className={`form__input ${errors?.email ? 'form__input_type_error' : ''}`}
                 placeholder="Введите email"
-                name="email"
               />
+              {errors?.email && <span className="form__input-error">{errors?.email?.message}</span>}
             </label>
             <label className="form__label-input">
               Пароль
               <input
-                required type="password"
-                className="form__input form__input_type_error"
-                value={passwordValue}
-                onChange={handleChangePassword}
+                {...register('password', {
+                  required: 'Поле password не может быть пустым',
+                  minLength: {
+                    value: 8,
+                    message: 'Поле password должно содержать минимум 8 символов',
+                  },
+                })}
+                type="password"
+                className={`form__input ${errors?.password ? 'form__input_type_error' : ''}`}
                 placeholder="Введите пароль"
-                name="password"
               />
-              <span className="form__input-error">Что-то пошло не так...</span>
+              {errors?.password && <span className="form__input-error">{errors?.password?.message}</span>}
             </label>
           </div>
-          {props.isRequestWrong ? (<span className="form__submit-error" >{props.isErrorMessage}</span>) : ''}
-          <button className="form__form-button" type="submit">Войти</button>
+          {props.isLoginRequestWrong ? (<span className="form__submit-error" >{props.isErrorMessage}</span>) : ''}
+          <button
+            className={`form__form-button ${!isValid ? 'form__form-button_type_disabled' : ''}`}
+            disabled={!isValid}
+            type="submit">
+            Войти
+          </button>
         </form>
         <p className="form__wrapper">
           <span className="form__wrapper-text">Ещё не зарегистрированы?</span>

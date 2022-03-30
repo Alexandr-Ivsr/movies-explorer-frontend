@@ -55,6 +55,12 @@
   color: #FF4062;
 }
 
+.profile-form__submit-error {
+  display: block;
+  padding: 0 6px 10px;
+  color: #FF4062;
+}
+
 .profile-form__form-button {
   width: 100%;
   color: #FFFFFF;
@@ -71,6 +77,15 @@
 
 .profile-form__form-button:hover {
   opacity: .7;
+}
+
+.profile-form__form-button_type_disabled {
+  background-color: #e6e6e6;
+}
+
+.profile-form__form-button_type_disabled:hover {
+  cursor: auto;
+  opacity: 1;
 }
 
 @media (min-width: 768px) {

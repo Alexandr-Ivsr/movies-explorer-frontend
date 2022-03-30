@@ -100,7 +100,7 @@ export default function Register(props) {
               {errors?.password && <span className="form__input-error">{errors?.password?.message}</span>}
             </label>
           </div>
-          {props.isRequestWrong ? (<span className="form__submit-error" >{props.isErrorMessage}</span>) : ''}
+          {props.isRegisterRequestWrong ? (<span className="form__submit-error" >{props.isErrorMessage}</span>) : ''}
           <button
             className={`form__form-button ${!isValid ? 'form__form-button_type_disabled' : ''}`}
             disabled={!isValid}

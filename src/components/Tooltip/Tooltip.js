@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Tooltip.css';
 import ButtonClose from '../../images/button-close.svg';
 import IconTooltip from '../../images/tooltip-icon-label.svg';
