@@ -41,7 +41,7 @@ function App() {
       .then((res) => {
         navigate('/signin');
         setIsRegisterRequestWrong(false);
-        handleSigninUser();
+        handleSigninUser(data);
       })
       .catch((err) => {
         console.log(err);
@@ -68,7 +68,7 @@ function App() {
 
   const handleSignoutUser = () => {
     MainApi.signout()
-      .then((res) => {
+      .then(() => {
         navigate('/');
         localStorage.clear();
       })

@@ -40,13 +40,23 @@ export default function Movies(props) {
 
   // запрос фильмов, их сохранение и фильтр по ключевому слову
   const showFilms = (inputValue, isCheckBoxActive) => {
+    const searchValue = inputValue.toLowerCase();
+    let filteredArrayByName;
+
     if (movies.length === 0) {
       setIsLoading(true);
-      
+
       MoviesApi.getAllMovies()
         .then((res) => {
           localStorage.setItem('movies', JSON.stringify(res));
           setMovies(res);
+
+          filteredArrayByName = res.filter((item) => {
+            return (!!item.nameRU && item.nameRU.toLowerCase().includes(searchValue)) || (!!item.description && item.description.toLowerCase().includes(searchValue))
+          });
+
+          setFilteredMovies(filteredArrayByName);
+          localStorage.setItem('filteredMovies', JSON.stringify(filteredArrayByName));
         })
         .catch(() => {
           setIsError(true);
@@ -54,15 +64,15 @@ export default function Movies(props) {
         .finally(() => {
           setIsLoading(false);
         })
+    } else {
+      filteredArrayByName = movies.filter((item) => {
+        return (!!item.nameRU && item.nameRU.toLowerCase().includes(searchValue)) || (!!item.description && item.description.toLowerCase().includes(searchValue))
+      });
+
+      setFilteredMovies(filteredArrayByName);
+      localStorage.setItem('filteredMovies', JSON.stringify(filteredArrayByName));
     }
 
-    const searchValue = inputValue.toLowerCase();
-
-    const filteredArrayByName = movies.filter((item) => {
-      return (!!item.nameRU && item.nameRU.toLowerCase().includes(searchValue)) || (!!item.description && item.description.toLowerCase().includes(searchValue))
-    });
-    setFilteredMovies(filteredArrayByName);
-    localStorage.setItem('filteredMovies', JSON.stringify(filteredArrayByName));
     localStorage.setItem('searchMoviesValue', inputValue);
     localStorage.setItem('stateCheckboxMovies', isCheckBoxActive);
   }
