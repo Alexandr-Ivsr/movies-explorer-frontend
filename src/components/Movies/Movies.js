@@ -23,21 +23,7 @@ export default function Movies(props) {
 
     if (localStorage.getItem('movies')) {
       setMovies(JSON.parse(localStorage.getItem('movies')));
-    } else {
-      setIsLoading(true);
-      MoviesApi.getAllMovies()
-        .then((res) => {
-          localStorage.setItem('movies', JSON.stringify(res));
-          setMovies(res);
-        })
-        .catch(() => {
-          setIsError(true);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        })
     }
-
     getSavedFilms();
   }, []);
 
@@ -54,6 +40,22 @@ export default function Movies(props) {
 
   // запрос фильмов, их сохранение и фильтр по ключевому слову
   const showFilms = (inputValue, isCheckBoxActive) => {
+    if (movies.length === 0) {
+      setIsLoading(true);
+      
+      MoviesApi.getAllMovies()
+        .then((res) => {
+          localStorage.setItem('movies', JSON.stringify(res));
+          setMovies(res);
+        })
+        .catch(() => {
+          setIsError(true);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
+    }
+
     const searchValue = inputValue.toLowerCase();
 
     const filteredArrayByName = movies.filter((item) => {
