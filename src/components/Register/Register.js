@@ -21,8 +21,6 @@ export default function Register(props) {
     }
   });
   const navigate = useNavigate();
-  console.log('isValid', isValid);
-
   useEffect(() => {
     if (props.loggedIn) {
       navigate('/');
@@ -31,7 +29,6 @@ export default function Register(props) {
 
   const onSubmit = (data) => {
     props.onSignupUser(data);
-    console.log(data);
   }
 
   return (

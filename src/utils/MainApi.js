@@ -7,7 +7,6 @@ const checkResponse = (res) => {
   else {
     return res.json()
       .then((data) => {
-        console.log(data);
         return Promise.reject(data);
       })
   }
@@ -83,6 +82,64 @@ export const updateCurrentUserInfo = ({ email, name }) => {
     })
 }
 
-export const addMovie = () => {
+//фильмы 
+export const getSavedMovies = () => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => {
+      return checkResponse(res);
+    })
+}
 
+export const addMovie = ({
+  country,
+  director,
+  duration,
+  year,
+  description,
+  image,
+  trailerLink,
+  thumbnail,
+  movieId,
+  nameRU,
+  nameEN,
+}) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailerLink,
+      thumbnail,
+      movieId,
+      nameRU,
+      nameEN,
+    })
+  })
+    .then((res) => {
+      return checkResponse(res);
+    })
+}
+
+export const deleteMovie = (_id) => {
+  return fetch(`${BASE_URL}/movies/${_id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
 }

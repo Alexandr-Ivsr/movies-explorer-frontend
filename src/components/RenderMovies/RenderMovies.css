@@ -1,0 +1,30 @@
+.render-movies__button-wrapper {
+  padding: 50px 40px 80px;
+  text-align: center;
+}
+
+.render-movies__button-append {
+  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  width: 240px;
+  height: 36px;
+  text-align: center;
+  border: 1px #E8E8E8 solid;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: .2s opacity ease-in-out;
+  background-color: #FFFFFF;
+}
+
+.render-movies__button-append:hover {
+  opacity: .5;
+}
+
+@media (min-width: 1280px) {
+  .render-movies__button-append {
+    width: 320px;
+  }
+}

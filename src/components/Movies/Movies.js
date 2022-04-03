@@ -3,50 +3,90 @@ import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import * as MoviesApi from '../../utils/MoviesApi';
+import * as MainApi from '../../utils/MainApi';
+import RenderMovies from '../RenderMovies/RenderMovies';
 
 export default function Movies(props) {
   const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isCheckBoxActive, setIsCheckBoxActive] = useState(false);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem('filteredMovies')) {
-      setMovies(JSON.parse(localStorage.getItem('filteredMovies')));
+      setFilteredMovies(JSON.parse(localStorage.getItem('filteredMovies')));
     }
+
+    if (localStorage.getItem('movies')) {
+      setMovies(JSON.parse(localStorage.getItem('movies')));
+    } else {
+      setIsLoading(true);
+      MoviesApi.getAllMovies()
+        .then((res) => {
+          localStorage.setItem('movies', JSON.stringify(res));
+          setMovies(res);
+        })
+        .catch(() => {
+          setIsError(true);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
+    }
+
+    getSavedFilms();
   }, []);
+
+  const getSavedFilms = () => {
+    MainApi.getSavedMovies()
+    .then((res) => {
+      setSavedMovies(res);
+    })
+    .catch((err) => {
+      console.log(err, err.message);
+      setIsError(true);
+    })
+  }
 
   // запрос фильмов, их сохранение и фильтр по ключевому слову
   const showFilms = (inputValue, isCheckBoxActive) => {
-    setIsLoading(true);
     const searchValue = inputValue.toLowerCase();
 
-    MoviesApi.getAllMovies()
-      .then((res) => {
-        localStorage.setItem('movies', JSON.stringify(res));
-        localStorage.setItem('inputValue', inputValue);
-        localStorage.setItem('isCheckBoxActive', isCheckBoxActive);
+    const filteredArrayByName = movies.filter((item) => {
+      return (!!item.nameRU && item.nameRU.toLowerCase().includes(searchValue)) || (!!item.description && item.description.toLowerCase().includes(searchValue))
+    });
+    setFilteredMovies(filteredArrayByName);
+    localStorage.setItem('filteredMovies', JSON.stringify(filteredArrayByName));
+    localStorage.setItem('searchMoviesValue', inputValue);
+    localStorage.setItem('stateCheckboxMovies', isCheckBoxActive);
+  }
 
-        const arrayMovies = JSON.parse(localStorage.getItem('movies'));
+  const handleMovieBtn = (data) => {
+    let match = savedMovies.find((item) => {
+      return item.movieId === data.movieId;
+    })
 
-        const filteredArrayByName = arrayMovies.filter((item) => {
-          return (!!item.nameRU && item.nameRU.includes(searchValue)) || (!!item.description && item.description.includes(searchValue))
+    if (match?._id) {
+      MainApi.deleteMovie(match._id)
+        .then(() => {
+          getSavedFilms();
         })
-
-        setMovies(filteredArrayByName);
-        localStorage.setItem('filteredMovies', JSON.stringify(filteredArrayByName));
-        console.log(filteredArrayByName);
-      })
-      .catch((err) => {
-        setIsError(true);
-        console.log(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      })
+        .catch((err) => {
+          console.log(err, err.message);
+        })
+    } else {
+      MainApi.addMovie(data)
+        .then(() => {
+          getSavedFilms();
+        })
+        .catch((err) => {
+          console.log(err, err.message);
+        })
+    }
   }
 
   return (
@@ -60,8 +100,8 @@ export default function Movies(props) {
             Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз
           </div>) : null}
         {!isLoading && !isError ?
-          movies.length > 0 ? (
-            <MoviesCardList moviesCards={movies} isCheckBoxActive={isCheckBoxActive} />
+          filteredMovies.length > 0 ? (
+            <RenderMovies moviesCards={filteredMovies} savedMovies={savedMovies} isCheckBoxActive={isCheckBoxActive} onBtnMovieClick={handleMovieBtn} />
           ) : (
             <div className="movies__notfound">Ничего не найдено</div>
           )

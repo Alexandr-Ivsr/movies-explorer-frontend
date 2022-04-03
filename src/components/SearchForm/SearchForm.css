@@ -28,6 +28,16 @@
   border-color: #07e024;
 }
 
+.search-form__input-error {
+  color: #FF4062;
+  display: none;
+  display: block;
+  position: absolute;
+  top: 60px;
+  font-size: 14px;
+  left: 18px;
+}
+
 .search-form__form-button {
   padding: 8px 10px;
   font-weight: 500;

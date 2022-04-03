@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './ProfileForm.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useForm } from 'react-hook-form';
@@ -19,10 +19,8 @@ export default function ProfileForm(props) {
       email: '',
     }
   })
-  console.log(userInfo.name, userInfo.email, isValid);
 
   const onSubmit = (data) => {
-    console.log(data);
     props.onUpdateCurrentUser(data, props.setIsEdit)
   }
 

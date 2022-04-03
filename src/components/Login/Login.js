@@ -29,7 +29,6 @@ export default function Login(props) {
 
   const onSubmit = (data) => {
     props.onSigninUser(data);
-    console.log(data);
   }
 
   return (

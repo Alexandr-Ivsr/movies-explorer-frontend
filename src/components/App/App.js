@@ -20,24 +20,22 @@ function App() {
   const [isRegisterRequestWrong, setIsRegisterRequestWrong] = useState(false);
   const [isUpdateUserRequestWrong, setIsUpdateUserRequestWrong] = useState(false);
   const [isErrorMessage, setIsErrorMessage] = useState('');
+  const isAuth = localStorage.getItem('isAuth') === 'true';
   const navigate = useNavigate();
 
-  const isAuth = localStorage.getItem('isAuth') === 'true';
-  console.log('isAuth', isAuth);
-
-  // проверка токена при запуске приложения
   useEffect(() => {
     MainApi.getCurrentUser()
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
+        localStorage.setItem('isAuth', true);
       })
       .catch((err) => {
         console.log(err);
+        localStorage.setItem('isAuth', false);
       })
   }, []);
 
-  // регистрация
   const handleSignupUser = (data) => {
     MainApi.signup(data)
       .then((res) => {
@@ -51,7 +49,6 @@ function App() {
       })
   }
 
-  // авторизация
   const handleSigninUser = (data) => {
     MainApi.signin(data)
       .then((res) => {
@@ -65,15 +62,12 @@ function App() {
         console.log(err);
         setIsLoginRequestWrong(true);
         setIsErrorMessage(err.message);
-
       })
   }
 
-  // выход из профиля, удаление токена из куков
   const handleSignoutUser = () => {
     MainApi.signout()
       .then((res) => {
-        console.log(res.message);
         navigate('/');
         localStorage.clear();
       })
