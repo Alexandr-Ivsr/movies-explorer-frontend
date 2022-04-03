@@ -41,6 +41,7 @@ function App() {
       .then((res) => {
         navigate('/signin');
         setIsRegisterRequestWrong(false);
+        handleSigninUser();
       })
       .catch((err) => {
         console.log(err);
