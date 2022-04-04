@@ -82,7 +82,6 @@ export const updateCurrentUserInfo = ({ email, name }) => {
     })
 }
 
-//фильмы 
 export const getSavedMovies = () => {
   return fetch(`${BASE_URL}/movies`, {
     method: 'GET',

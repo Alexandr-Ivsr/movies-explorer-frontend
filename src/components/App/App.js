@@ -54,10 +54,10 @@ function App() {
     MainApi.signin(data)
       .then((res) => {
         setLoggedIn(true);
+        localStorage.setItem('isAuth', true);
         setCurrentUser(res);
         setIsLoginRequestWrong(false);
         navigate('/movies');
-        localStorage.setItem('isAuth', true);
       })
       .catch((err) => {
         console.log(err);
@@ -68,9 +68,11 @@ function App() {
 
   const handleSignoutUser = () => {
     MainApi.signout()
-      .then(() => {
-        navigate('/');
+      .then((res) => {
+        console.log(res.message);
         localStorage.clear();
+        setLoggedIn(false);
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);

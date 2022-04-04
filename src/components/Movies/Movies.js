@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 import * as MoviesApi from '../../utils/MoviesApi';
 import * as MainApi from '../../utils/MainApi';
 import RenderMovies from '../RenderMovies/RenderMovies';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 export default function Movies(props) {
   const [movies, setMovies] = useState([]);
@@ -15,6 +16,8 @@ export default function Movies(props) {
   const [isError, setIsError] = useState(false);
   const [isCheckBoxActive, setIsCheckBoxActive] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [searchedValue, setSearchedValue] = useState(localStorage.getItem("searchMoviesValue"));
+  const userInfo = React.useContext(CurrentUserContext);
 
   useEffect(() => {
     if (localStorage.getItem('filteredMovies')) {
@@ -24,28 +27,29 @@ export default function Movies(props) {
     if (localStorage.getItem('movies')) {
       setMovies(JSON.parse(localStorage.getItem('movies')));
     }
-    getSavedFilms();
   }, []);
 
-  const getSavedFilms = () => {
-    MainApi.getSavedMovies()
-    .then((res) => {
-      setSavedMovies(res);
-    })
-    .catch((err) => {
-      console.log(err, err.message);
-      setIsError(true);
-    })
-  }
+  useEffect(() => {
+    if (userInfo._id) {
+      MainApi.getSavedMovies()
+      .then((res) => {
+        setSavedMovies(res.filter((item) => item.owner === userInfo._id));
+      })
+      .catch((err) => {
+        console.log(err, err.message);
+        setIsError(true);
+      })
+    }
+  }, [userInfo]);
 
   // запрос фильмов, их сохранение и фильтр по ключевому слову
   const showFilms = (inputValue, isCheckBoxActive) => {
+    setIsLoading(true);
     const searchValue = inputValue.toLowerCase();
     let filteredArrayByName;
+    setSearchedValue(searchValue);
 
     if (movies.length === 0) {
-      setIsLoading(true);
-
       MoviesApi.getAllMovies()
         .then((res) => {
           localStorage.setItem('movies', JSON.stringify(res));
@@ -65,12 +69,15 @@ export default function Movies(props) {
           setIsLoading(false);
         })
     } else {
-      filteredArrayByName = movies.filter((item) => {
-        return (!!item.nameRU && item.nameRU.toLowerCase().includes(searchValue)) || (!!item.description && item.description.toLowerCase().includes(searchValue))
-      });
+      setTimeout(() => {
+        filteredArrayByName = movies.filter((item) => {
+          return (!!item.nameRU && item.nameRU.toLowerCase().includes(searchValue)) || (!!item.description && item.description.toLowerCase().includes(searchValue))
+        });
 
-      setFilteredMovies(filteredArrayByName);
-      localStorage.setItem('filteredMovies', JSON.stringify(filteredArrayByName));
+        setIsLoading(false);
+        setFilteredMovies(filteredArrayByName);
+        localStorage.setItem('filteredMovies', JSON.stringify(filteredArrayByName));
+      }, 500);
     }
 
     localStorage.setItem('searchMoviesValue', inputValue);
@@ -85,15 +92,16 @@ export default function Movies(props) {
     if (match?._id) {
       MainApi.deleteMovie(match._id)
         .then(() => {
-          getSavedFilms();
+          const deletedIndex = savedMovies.findIndex((item) => item.movieId === match.movieId);
+          setSavedMovies([...savedMovies.slice(0, deletedIndex), ...savedMovies.slice(deletedIndex + 1)]);
         })
         .catch((err) => {
           console.log(err, err.message);
         })
     } else {
       MainApi.addMovie(data)
-        .then(() => {
-          getSavedFilms();
+        .then((res) => {
+          setSavedMovies([...savedMovies, res])
         })
         .catch((err) => {
           console.log(err, err.message);
@@ -107,17 +115,17 @@ export default function Movies(props) {
       <main className="movies">
         <SearchForm onShowFilms={showFilms} onsetIsCheckBoxActive={setIsCheckBoxActive} />
         {isLoading ? <Preloader /> : null}
-        {isError ?
-          (<div className="movies__error">
+        {isError && (
+          <div className="movies__error">
             Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз
-          </div>) : null}
-        {!isLoading && !isError ?
-          filteredMovies.length > 0 ? (
-            <RenderMovies moviesCards={filteredMovies} savedMovies={savedMovies} isCheckBoxActive={isCheckBoxActive} onBtnMovieClick={handleMovieBtn} />
-          ) : (
-            <div className="movies__notfound">Ничего не найдено</div>
-          )
-          : null}
+          </div>
+          )}
+        {!isLoading && !isError && filteredMovies.length > 0 && (
+          <RenderMovies moviesCards={filteredMovies} savedMovies={savedMovies} isCheckBoxActive={isCheckBoxActive} onBtnMovieClick={handleMovieBtn} />
+        )}
+        {!isLoading && !isError && movies.length > 0 && filteredMovies.length === 0 && searchedValue && (
+          <div className="movies__notfound">Ничего не найдено</div>
+        )}
       </main>
       <Footer />
     </>
