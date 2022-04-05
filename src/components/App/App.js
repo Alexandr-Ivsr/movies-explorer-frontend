@@ -68,16 +68,18 @@ function App() {
 
   const handleSignoutUser = () => {
     console.log('fsdfsdf');
-    MainApi.signout()
-      .then((res) => {
-        setLoggedIn(false);
-        console.log(res, 'проверка удаления');
-        localStorage.clear();
-        // navigate('/');
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    if (loggedIn) {
+      MainApi.signout()
+        .then((res) => {
+          setLoggedIn(false);
+          console.log(res, 'logout success');
+          localStorage.clear();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+
   }
 
   const handleUpdateCurrentUserInfo = (data, setIsEdit) => {
