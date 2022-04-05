@@ -67,12 +67,13 @@ function App() {
   }
 
   const handleSignoutUser = () => {
+    console.log('fsdfsdf');
     MainApi.signout()
       .then((res) => {
-        console.log(res.message);
-        localStorage.clear();
         setLoggedIn(false);
-        navigate('/');
+        console.log(res, 'проверка удаления');
+        localStorage.clear();
+        // navigate('/');
       })
       .catch((err) => {
         console.log(err);

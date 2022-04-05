@@ -42,7 +42,6 @@ export default function Movies(props) {
     }
   }, [userInfo]);
 
-  // запрос фильмов, их сохранение и фильтр по ключевому слову
   const showFilms = (inputValue, isCheckBoxActive) => {
     setIsLoading(true);
     const searchValue = inputValue.toLowerCase();
