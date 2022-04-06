@@ -71,7 +71,7 @@ function App() {
       .then((res) => {
         localStorage.clear();
         setLoggedIn(false);
-        console.log(res, 'logout success');
+        console.log(res.message);
       })
       .catch((err) => {
         console.log(err.message);

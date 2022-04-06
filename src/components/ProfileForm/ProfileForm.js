@@ -8,6 +8,7 @@ export default function ProfileForm(props) {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: {
       errors,
       isValid,
@@ -22,6 +23,17 @@ export default function ProfileForm(props) {
 
   const onSubmit = (data) => {
     props.onUpdateCurrentUser(data, props.setIsEdit)
+  }
+
+  const validateValues = () => {
+    const nameValue = getValues("name");
+    const emailValue = getValues("email");
+
+    if (nameValue !== userInfo.name || emailValue !== userInfo.email) {
+      return true
+    }
+
+    return 'Данное значение уже используется в вашем профиле'
   }
 
   return (
@@ -46,7 +58,7 @@ export default function ProfileForm(props) {
                     value: /^[A-Za-zА-Яа-я-\s]+$/,
                     message: 'Поле name должно содержать латиницу, кирилицу, пробел или дефис',
                   },
-                  validate: value => value !== userInfo.name || 'Данное имя уже используется в вашем профиле',
+                  validate: validateValues,
                 })}
                 type="text"
                 className={`profile-form__input ${errors?.name ? 'profile-form__input_type_error' : ''}`}
@@ -63,9 +75,7 @@ export default function ProfileForm(props) {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: 'Введен некорректный адрес почты',
                   },
-                  validate: (value) => {
-                    return value !== userInfo.email || 'Эта почта уже используется в вашем профиле';
-                  },
+                  validate: validateValues,
                 })}
                 type="email"
                 className={`profile-form__input ${errors?.email ? 'profile-form__input_type_error' : ''}`}
