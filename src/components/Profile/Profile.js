@@ -43,7 +43,7 @@ export default function Profile(props) {
               <button className="profile__button-edit" onClick={() => setIsEdit(true)}>Редактировать</button>
             </>
           )}
-          <a className="profile__link" onClick={handleSignout} href="/">Выйти из аккаунта</a>
+          <button className="profile__button-exit" onClick={handleSignout}>Выйти из аккаунта</button>
         </div>
         <Tooltip setIsTooltipOpen={props.setIsTooltipOpen} isTooltipOpen={props.isTooltipOpen} />
       </section>
