@@ -9,6 +9,7 @@ export default function ProfileForm(props) {
     register,
     handleSubmit,
     getValues,
+    clearErrors,
     formState: {
       errors,
       isValid,
@@ -30,10 +31,12 @@ export default function ProfileForm(props) {
     const emailValue = getValues("email");
 
     if (nameValue !== userInfo.name || emailValue !== userInfo.email) {
-      return true
+      clearErrors("name");
+      clearErrors("email");
+      return true;
+    } else {
+      return 'Данное значение уже используется в вашем профиле';
     }
-
-    return 'Данное значение уже используется в вашем профиле'
   }
 
   return (
