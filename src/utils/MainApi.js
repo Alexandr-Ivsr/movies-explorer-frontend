@@ -1,7 +1,8 @@
-export const BASE_URL = 'http://localhost:3001';
+export const BASE_URL = 'https://api.explorer-movie.nomoredomains.work';
 
 // http://localhost:3001
 // https://api.explorer-movie.nomoredomains.work
+
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
