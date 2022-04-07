@@ -1,40 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './MoviesCard.css';
-import cardImage1 from '../../images/card-image1.jpg';
+import getTimeFromMins from '../../utils/getTimeFromMins';
 
-export default function MoviesCard(props) {
+export default function MoviesCard({ movie, isSavedMovies, onBtnMovieClick, savedMovies }) {
+  const [isLikedBtn, setIsLikedBtn] = useState(false);
+
+  useEffect(() => {
+    if (savedMovies?.length > 0) {
+      setIsLikedBtn(savedMovies.some(el => el.movieId === movie.id));
+    } else {
+      setIsLikedBtn(false);
+    }
+  }, [savedMovies])
+
+  const handleClick = (evt) => {
+    evt.preventDefault();
+    onBtnMovieClick({
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      year: movie.year,
+      description: movie.description,
+      image: `https://api.nomoreparties.co/${movie.image.url}`,
+      trailerLink: movie.trailerLink ? movie.trailerLink : 'https://www.youtube.com',
+      thumbnail: `https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`,
+      movieId: movie.id,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN ? movie.nameEN : 'unknown',
+    })
+  }
+
+  const handleDelete = (evt) => {
+    evt.preventDefault();
+    onBtnMovieClick(movie._id);
+  }
+
   return (
-    <>
-      <div className="moviescard">
-        <img className="moviescard__movie-image" src={cardImage1} alt="мини-иллюстрация к фильму" />
-        <div className="moviescard__wrapper">
-          <h3 className="moviescard__title">33 слова о дизайне</h3>
-          <p className="moviescard__movie-duration">1ч 42м</p>
-          {props.isSavedMovies ?
-            (<button className="moviescard__button moviescard__button_type_delete"></button>) :
-            (<button className="moviescard__button moviescard__button_type_like"></button>)}
-        </div>
+    <a href={movie.trailerLink} className="moviescard" target="_blank" rel="noreferrer">
+      <img className="moviescard__movie-image"
+        src={isSavedMovies ? movie.image : `https://api.nomoreparties.co/${movie.image.url}`}
+        alt="мини-иллюстрация к фильму" />
+      <div className="moviescard__wrapper">
+        <h3 className="moviescard__title">{movie.nameRU}</h3>
+        <p className="moviescard__movie-duration">{getTimeFromMins(movie.duration)}</p>
+        {isSavedMovies ? (
+          <button className="moviescard__button moviescard__button_type_delete" onClick={handleDelete}></button>
+          ) : (
+            <button
+              className={`moviescard__button ${isLikedBtn ? 'moviescard__button_type_like_active' : 'moviescard__button_type_like'}`}
+              onClick={handleClick}>
+            </button>
+          )
+        }
       </div>
-      <div className="moviescard">
-        <img className="moviescard__movie-image" src={cardImage1} alt="мини-иллюстрация к фильму" />
-        <div className="moviescard__wrapper">
-          <h3 className="moviescard__title">33 слова о дизайне</h3>
-          <p className="moviescard__movie-duration">1ч 42м</p>
-          {props.isSavedMovies ?
-            (<button className="moviescard__button moviescard__button_type_delete"></button>) :
-            (<button className="moviescard__button moviescard__button_type_like moviescard__button_type_like_active"></button>)}
-        </div>
-      </div>
-      <div className="moviescard">
-        <img className="moviescard__movie-image" src={cardImage1} alt="мини-иллюстрация к фильму" />
-        <div className="moviescard__wrapper">
-          <h3 className="moviescard__title">33 слова о дизайне</h3>
-          <p className="moviescard__movie-duration">1ч 42м</p>
-          {props.isSavedMovies ?
-            (<button className="moviescard__button moviescard__button_type_delete"></button>) :
-            (<button className="moviescard__button moviescard__button_type_like"></button>)}
-        </div>
-      </div>
-    </>
+    </a>
   )
 }

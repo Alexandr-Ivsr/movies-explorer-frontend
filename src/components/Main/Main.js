@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer';
 export default function Main(props) {
   return (
     <>
-      <Header isMainPage={true} />
+      <Header isMainPage={true} loggedIn={props.loggedIn} />
       <main className="main">
         <Promo />
         <NavTab />

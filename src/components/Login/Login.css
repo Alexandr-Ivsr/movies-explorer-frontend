@@ -84,6 +84,12 @@
   color: #FF4062;
 }
 
+.form__submit-error {
+  display: block;
+  padding: 0 6px 10px;
+  color: #FF4062;
+}
+
 .form__form-button {
   width: 100%;
   color: #FFFFFF;
@@ -100,6 +106,16 @@
 
 .form__form-button:hover {
   opacity: .7;
+}
+
+.form__form-button_type_disabled {
+  background-color: #e6e6e6;
+}
+
+.form__form-button_type_disabled:hover {
+  background-color: #e6e6e6;
+  cursor: auto;
+  opacity: 1;
 }
 
 .form__wrapper {

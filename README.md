@@ -8,4 +8,4 @@ https://www.figma.com/file/zuTirMxX36WVoRVtiHhvYP/Diploma?node-id=891%3A3857
 
 Домен:
 
-http://explorer-movie.nomoredomains.work
+https://explorer-movie.nomoredomains.work
